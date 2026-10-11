@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Siberfx\XAutopost\Concerns\PostsToX;
+use Siberfx\XAutopost\Contracts\ShareableOnX;
+use Siberfx\XAutopost\Posts\XPost;
+
+/**
+ * Example: a model that is posted to X when it goes live.
+ *
+ * 1. implement ShareableOnX and use PostsToX;
+ * 2. say when it is live (isLiveForX);
+ * 3. say what to post (toXPost).
+ */
+class Article extends Model implements ShareableOnX
+{
+    use PostsToX;
+
+    public function isLiveForX(): bool
+    {
+        return $this->status === 'published';
+    }
+
+    public function toXPost(): XPost
+    {
+        return XPost::make(url: route('articles.show', $this), title: $this->title)
+            ->description(Str::limit(strip_tags((string) $this->excerpt), 250))
+            ->commentary("{title}\n\n{url}");
+    }
+}
