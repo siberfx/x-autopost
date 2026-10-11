@@ -4,6 +4,7 @@ All notable changes to `siberfx/x-autopost` are documented here. This project fo
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
+n## [1.0.0] - 2026-10-11
 
 ### Added
 - Connect one X account through OAuth 2.0 with PKCE (`/x/redirect`, `/x/callback`). The refresh token is stored encrypted; a request X refuses with 401 is retried once after a refresh, and the rotated pair is stored each time.
